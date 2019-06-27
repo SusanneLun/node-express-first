@@ -75,3 +75,19 @@ function validateCourse(course) {
   }
   return Joi.validate(course, schema)
 }
+
+app.delete('api/courses/:id', (req, res) => {
+  //Look up the course
+  //Not existing, return 404
+  const course = courses.find(c => c.id === parseInt(req.params.id))
+  if (!course) res.status(404).send('The course was not found')
+
+  //Delete
+  const index = courses.indexOf(course)
+  courses.splice(index, 1)
+
+
+  //Return the same course
+  res.send(course)
+
+})
